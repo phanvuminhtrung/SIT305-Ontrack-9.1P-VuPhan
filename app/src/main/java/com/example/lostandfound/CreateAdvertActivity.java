@@ -27,6 +27,10 @@ import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.Priority;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -173,28 +177,74 @@ public class CreateAdvertActivity extends AppCompatActivity {
     }
 
     private void getCurrentLocation() {
-        if (checkLocationPermission()) {
-            fusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(this, location -> {
-                        if (location != null) {
-                            double latitude = location.getLatitude();
-                            double longitude = location.getLongitude();
-                            getAddressFromLocation(latitude, longitude);
-                        } else {
-                            Toast.makeText(CreateAdvertActivity.this, "Unable to retrieve current location", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
+        if (!checkLocationPermission()) return;
+
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, location -> {
+                    if (location != null) {
+                        double latitude = location.getLatitude();
+                        double longitude = location.getLongitude();
+                        getAddressFromLocation(latitude, longitude);
+                    } else {
+                        // Fallback: request new location
+                        LocationRequest request = LocationRequest.create()
+                                .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
+                                .setInterval(1000)
+                                .setNumUpdates(1);
+
+                        fusedLocationClient.requestLocationUpdates(
+                                request,
+                                new LocationCallback() {
+                                    @Override
+                                    public void onLocationResult(@NonNull LocationResult locationResult) {
+                                        Location updatedLocation = locationResult.getLastLocation();
+                                        if (updatedLocation != null) {
+                                            getAddressFromLocation(
+                                                    updatedLocation.getLatitude(),
+                                                    updatedLocation.getLongitude()
+                                            );
+                                        } else {
+                                            Toast.makeText(CreateAdvertActivity.this, "Still unable to retrieve current location", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                },
+                                getMainLooper()
+                        );
+                    }
+                });
     }
+
 
     private void getAddressFromLocation(double latitude, double longitude) {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         try {
             List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
             if (!addresses.isEmpty()) {
-                locationEditText.setText(addresses.get(0).getAddressLine(0));
+                String addressLine = addresses.get(0).getAddressLine(0);
+
+                // Save to DB (hidden field)
+                locationEditText.setText(addressLine);
+
+                // Update autocomplete UI
+                AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
+                        getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
+
+                if (autocompleteFragment != null && autocompleteFragment.getView() != null) {
+                    View fragmentView = autocompleteFragment.getView();
+                    EditText autocompleteInput = fragmentView.findViewById(
+                            com.google.android.libraries.places.R.id.places_autocomplete_search_input);
+
+                    if (autocompleteInput != null) {
+                        autocompleteInput.setText(addressLine); // ✅ THIS is what user sees
+                    }
+                }
+
+                Toast.makeText(this, "Location set to: " + addressLine, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "No address found for location", Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
+            Toast.makeText(this, "Error getting address", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
