@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <CheckBox
+        android:id="@+id/isLostCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lost"
+        android:textSize="20sp"/>
+
+    <CheckBox
+        android:id="@+id/isFoundCheckBox"
+        android:layout_width="123dp"
+        android:layout_height="wrap_content"
+        android:text="Found"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/nameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="87dp"
+        android:hint="Name" />
+
+    <EditText
+        android:id="@+id/phoneEditText"
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:hint="Phone" />
+
+    <EditText
+        android:id="@+id/descriptionEditText"
+        android:layout_width="match_parent"
+        android:layout_height="86dp"
+        android:hint="Description" />
+
+    <EditText
+        android:id="@+id/dateEditText"
+        android:layout_width="match_parent"
+        android:layout_height="86dp"
+        android:hint="Date" />
+
+    <EditText
+        android:id="@+id/locationEditText"
+        android:layout_width="match_parent"
+        android:layout_height="86dp"
+        android:hint="Location"
+        android:inputType="text"/>
+
+    <Button
+        android:id="@+id/getCurrentLocationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/locationEditText"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentEnd="true"
+        android:text="Get Current Location"
+        android:visibility="gone"
+        />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:text="Save" />
+
+    <Button
+        android:id="@+id/btnBackToMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back to Menu"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal" />
+
+
+</LinearLayout>

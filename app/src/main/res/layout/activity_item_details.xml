@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/text_view_name"
+        android:layout_width="match_parent"
+        android:layout_height="99dp"
+        android:text="Name: "
+        android:textSize="23sp" />
+
+    <TextView
+        android:id="@+id/text_view_phone"
+        android:layout_width="match_parent"
+        android:layout_height="93dp"
+        android:text="Phone: "
+        android:textSize="23sp" />
+
+    <TextView
+        android:id="@+id/text_view_description"
+        android:layout_width="match_parent"
+        android:layout_height="93dp"
+        android:text="Description: "
+        android:textSize="23sp" />
+
+    <TextView
+        android:id="@+id/text_view_location"
+        android:layout_width="match_parent"
+        android:layout_height="95dp"
+        android:text="Location: "
+        android:textSize="23sp" />
+
+    <TextView
+        android:id="@+id/text_view_date"
+        android:layout_width="match_parent"
+        android:layout_height="94dp"
+        android:text="Date: "
+        android:textSize="23sp" />
+
+    <TextView
+        android:id="@+id/text_view_is_lost_or_found"
+        android:layout_width="match_parent"
+        android:layout_height="97dp"
+        android:text="Is Lost or Found: "
+        android:textSize="23sp" />
+
+    <Button
+        android:id="@+id/button_remove_item"
+        android:layout_width="236dp"
+        android:layout_height="79dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:text="Remove Item" />
+
+    <Button
+        android:id="@+id/btnBackToMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>
