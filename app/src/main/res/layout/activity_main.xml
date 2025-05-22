@@ -35,7 +35,6 @@
         android:layout_width="138dp"
         android:layout_height="68dp"
         android:text="Show Items On Map"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
