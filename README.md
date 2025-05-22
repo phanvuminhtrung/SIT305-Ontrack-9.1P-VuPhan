@@ -1,4 +1,4 @@
-# SIT305 Task 7.1P - Lost & Found App
+# SIT305 Task 9.1P - Lost & Found App
 
 This is a mobile application built for the SIT305 - Mobile Application Development unit at Deakin University. It is part of Assessment Task 7.1P, which focuses on implementing an SQLite-based Lost & Found app for Android.
 
